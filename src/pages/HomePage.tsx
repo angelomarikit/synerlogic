@@ -1,9 +1,7 @@
 import { ArrowRight, Boxes, ClipboardCheck, Compass, Cpu } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { LinkButton } from '../components/Button'
 import { ClosingBand } from '../components/ClosingBand'
 import { Container } from '../components/Container'
-import { HeroDiagram } from '../components/diagrams/HeroDiagram'
 import { PillarCard } from '../components/PillarCard'
 import { ProcessTimeline } from '../components/ProcessTimeline'
 import { SectionHeading } from '../components/SectionHeading'
@@ -12,6 +10,10 @@ import { services } from '../content/services'
 import { friction, home, homeProcess, industries, seo } from '../content/siteContent'
 import { visuals } from '../content/visuals'
 import { VisualPanel } from '../components/VisualPanel'
+import heroBanner from '../assets/visuals/hero-banner.jpg'
+
+const heroButtonClass =
+  'min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#0668b3] to-[#0879CD] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_-12px_rgba(6,29,56,0.65)] transition duration-200 hover:-translate-y-0.5 hover:from-[#0879CD] hover:to-[#0a8ed4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0879CD]'
 
 const icons = {
   'strategic-consultancy': Compass,
@@ -24,26 +26,33 @@ export default function HomePage() {
   return (
     <>
       <SeoHead {...seo.home} />
-      <section className="border-b border-line">
-        <Container className="grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
-          <div className="reveal">
-            <p className="text-xs font-semibold tracking-[0.16em] text-blue uppercase">{home.eyebrow}</p>
-            <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-balance text-navy sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08]">
-              {home.headline}
-            </h1>
-            <p className="mt-5 text-lg leading-8 text-ink">{home.subheadline}</p>
-            <p className="mt-4 max-w-xl text-base leading-7 text-muted">{home.supporting}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <LinkButton to="/contact">{home.primaryCta}</LinkButton>
-              <LinkButton to="/services" variant="secondary">
-                {home.secondaryCta}
-              </LinkButton>
-            </div>
-          </div>
-          <div className="reveal">
-            <HeroDiagram />
-          </div>
-        </Container>
+      <section
+        aria-label="Synerlogic Global Solutions"
+        className="w-full bg-[linear-gradient(90deg,#e7f3fc_0_50%,#012a6a_50%_100%)]"
+      >
+        <div className="hero-frame relative mx-auto w-full max-w-[1024px] overflow-hidden">
+          <img
+            src={heroBanner}
+            alt="Synerlogic Global Solutions Corporation. Strategic solutions for a connected tomorrow, covering strategic consultancy, technology solutions, operational excellence, and global partnerships."
+            width={1024}
+            height={384}
+            decoding="async"
+            fetchPriority="high"
+            className="hero-frame-image block h-auto w-full object-contain"
+          />
+          <div className="hero-glow" aria-hidden="true" />
+          <div className="hero-sheen" aria-hidden="true" />
+          <Link to="/contact" className={`${heroButtonClass} absolute bottom-[22%] left-[4.5%] hidden lg:inline-flex`}>
+            Get in Touch
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </Link>
+        </div>
+        <div className="px-5 py-4 lg:hidden">
+          <Link to="/contact" className={`${heroButtonClass} inline-flex w-full`}>
+            Get in Touch
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </Link>
+        </div>
       </section>
 
       <section className="py-16 sm:py-20 lg:py-28" aria-labelledby="intro-heading">
@@ -57,6 +66,7 @@ export default function HomePage() {
               src={visuals.friction}
               alt="The gap between strategic intent and operational reality, marked by margin erosion, compliance risk, and stalled timelines."
               height={572}
+              floating
             />
           </div>
           <h3 className="mt-10 font-display text-2xl font-semibold tracking-tight text-navy sm:text-3xl">{friction.heading}</h3>

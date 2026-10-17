@@ -4,6 +4,7 @@ type VisualPanelProps = {
   width?: number
   height?: number
   priority?: boolean
+  floating?: boolean
   className?: string
 }
 
@@ -13,9 +14,10 @@ export function VisualPanel({
   width = 1024,
   height = 576,
   priority = false,
+  floating = false,
   className = '',
 }: VisualPanelProps) {
-  return (
+  const image = (
     <img
       src={src}
       alt={alt}
@@ -23,7 +25,16 @@ export function VisualPanel({
       height={height}
       loading={priority ? 'eager' : 'lazy'}
       decoding="async"
-      className={`h-auto w-full rounded-2xl border border-line bg-white ${className}`}
+      className={`h-auto w-full rounded-2xl border border-line bg-white ${floating ? 'visual-float' : ''} ${className}`}
     />
+  )
+
+  if (!floating) return image
+
+  return (
+    <div className="visual-float-stage">
+      <div className="visual-float-shadow" aria-hidden="true" />
+      {image}
+    </div>
   )
 }
