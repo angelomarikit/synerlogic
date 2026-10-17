@@ -19,16 +19,20 @@ export function SiteHeader() {
   const locationKey = `${location.pathname}${location.hash}`
   const menuId = useId()
   const servicesId = useId()
+  const mobileServicesId = useId()
   const [mobileKey, setMobileKey] = useState<string | null>(null)
   const [servicesKey, setServicesKey] = useState<string | null>(null)
+  const [mobileServicesKey, setMobileServicesKey] = useState<string | null>(null)
   const mobileOpen = mobileKey === locationKey
   const servicesOpen = servicesKey === locationKey
+  const mobileServicesOpen = mobileServicesKey === locationKey
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const servicesRef = useRef<HTMLLIElement>(null)
 
   function closeMobile() {
     setMobileKey(null)
+    setMobileServicesKey(null)
   }
 
   function closeServices() {
@@ -196,24 +200,48 @@ export function SiteHeader() {
             </div>
             <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-4 py-4">
               <ul className="space-y-1">
-                {nav.map((item) => (
-                  <li key={item.to}>
-                    <NavLink to={item.to} end={item.to === '/'} className={({ isActive }) => itemClass(isActive)}>
-                      {item.label}
-                    </NavLink>
-                    {'children' in item ? (
-                      <ul className="mt-1 mb-2 ml-3 border-l border-line pl-3">
-                        {item.children.map((service) => (
-                          <li key={service.id}>
-                            <Link to={`/services#${service.id}`} className="inline-flex min-h-11 items-center text-sm text-muted">
-                              {service.title}
+                {nav.map((item) =>
+                  'children' in item ? (
+                    <li key={item.to}>
+                      <button
+                        type="button"
+                        className={`${linkClass} w-full justify-between`}
+                        aria-expanded={mobileServicesOpen}
+                        aria-controls={mobileServicesId}
+                        onClick={() => setMobileServicesKey((current) => (current === locationKey ? null : locationKey))}
+                      >
+                        {item.label}
+                        <ChevronDown aria-hidden="true" className={`size-4 transition ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                      {mobileServicesOpen ? (
+                        <ul id={mobileServicesId} className="mt-1 mb-2 ml-3 border-l border-line pl-3">
+                          <li>
+                            <Link to={item.to} className="inline-flex min-h-11 items-center text-sm font-semibold text-navy" onClick={closeMobile}>
+                              All services
                             </Link>
                           </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                  </li>
-                ))}
+                          {item.children.map((service) => (
+                            <li key={service.id}>
+                              <Link
+                                to={`/services#${service.id}`}
+                                className="inline-flex min-h-11 items-center text-sm text-muted"
+                                onClick={closeMobile}
+                              >
+                                {service.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </li>
+                  ) : (
+                    <li key={item.to}>
+                      <NavLink to={item.to} end={item.to === '/'} className={({ isActive }) => itemClass(isActive)} onClick={closeMobile}>
+                        {item.label}
+                      </NavLink>
+                    </li>
+                  ),
+                )}
               </ul>
               <LinkButton to="/contact" className="mt-4 w-full">
                 Contact
