@@ -4,8 +4,13 @@ type VisualPanelProps = {
   width?: number
   height?: number
   priority?: boolean
-  floating?: boolean
   className?: string
+}
+
+function floatDelay(src: string) {
+  let total = 0
+  for (let index = 0; index < src.length; index += 1) total += src.charCodeAt(index)
+  return `${(total % 5) * 0.8}s`
 }
 
 export function VisualPanel({
@@ -14,27 +19,23 @@ export function VisualPanel({
   width = 1024,
   height = 576,
   priority = false,
-  floating = false,
   className = '',
 }: VisualPanelProps) {
-  const image = (
-    <img
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      loading={priority ? 'eager' : 'lazy'}
-      decoding="async"
-      className={`h-auto w-full rounded-2xl border border-line bg-white ${floating ? 'visual-float' : ''} ${className}`}
-    />
-  )
-
-  if (!floating) return image
-
   return (
-    <div className="visual-float-stage">
+    <div className="visual-float-stage" style={{ ['--float-delay' as string]: floatDelay(src) }}>
       <div className="visual-float-shadow" aria-hidden="true" />
-      {image}
+      <div className="visual-float">
+        <img
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
+          className={`block h-auto w-full ${className}`}
+        />
+        <div className="visual-sheen" aria-hidden="true" />
+      </div>
     </div>
   )
 }

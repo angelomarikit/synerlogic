@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { FaqWidget } from '../components/FaqWidget'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
 
@@ -30,6 +31,7 @@ export function SiteLayout() {
         <Outlet />
       </main>
       <SiteFooter />
+      <FaqWidget />
     </div>
   )
 }

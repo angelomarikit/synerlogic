@@ -66,7 +66,6 @@ export default function HomePage() {
               src={visuals.friction}
               alt="The gap between strategic intent and operational reality, marked by margin erosion, compliance risk, and stalled timelines."
               height={572}
-              floating
             />
           </div>
           <h3 className="mt-10 font-display text-2xl font-semibold tracking-tight text-navy sm:text-3xl">{friction.heading}</h3>
