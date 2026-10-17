@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import logo from '../assets/logo-mark.png'
@@ -167,8 +168,9 @@ export function SiteHeader() {
         </button>
       </Container>
 
-      {mobileOpen ? (
-        <div className="fixed inset-0 z-50 lg:hidden">
+      {mobileOpen
+        ? createPortal(
+            <div className="fixed inset-0 z-50 lg:hidden">
           <button type="button" className="absolute inset-0 bg-navy/40" aria-label="Close menu" onClick={closeMobile} />
           <div
             ref={panelRef}
@@ -176,7 +178,7 @@ export function SiteHeader() {
             role="dialog"
             aria-modal="true"
             aria-label="Mobile"
-            className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-xl"
+            className="absolute inset-y-0 right-0 flex h-full w-full max-w-sm flex-col bg-white shadow-xl"
           >
             <div className="flex h-[4.5rem] items-center justify-between border-b border-line px-5">
               <span className="font-display text-sm font-semibold text-navy">Menu</span>
@@ -218,8 +220,10 @@ export function SiteHeader() {
               </LinkButton>
             </nav>
           </div>
-        </div>
-      ) : null}
+        </div>,
+            document.body,
+          )
+        : null}
     </header>
   )
 }
