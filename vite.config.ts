@@ -17,6 +17,11 @@ function sitemapPlugin(): Plugin {
       outDir = config.build.outDir
       siteUrl = (config.env.VITE_SITE_URL ?? '').trim().replace(/\/$/, '')
     },
+    transformIndexHtml(html) {
+      if (!siteUrl) return html
+      const image = `${siteUrl}/og.jpg`
+      return html.replaceAll('content="/og.jpg"', `content="${image}"`)
+    },
     closeBundle() {
       const urls = routes
         .map((path) => {

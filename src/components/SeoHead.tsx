@@ -38,14 +38,20 @@ export function SeoHead({ title, description, path }: SeoHeadProps) {
     upsertMeta('property', 'og:title', title)
     upsertMeta('property', 'og:description', description)
     upsertMeta('property', 'og:type', 'website')
-    upsertMeta('name', 'twitter:card', 'summary')
+    upsertMeta('name', 'twitter:card', 'summary_large_image')
     upsertMeta('name', 'twitter:title', title)
     upsertMeta('name', 'twitter:description', description)
 
     const site = import.meta.env.VITE_SITE_URL?.trim().replace(/\/$/, '')
-    const image = site ? `${site}/favicon.png` : '/favicon.png'
+    const image = site ? `${site}/og.jpg` : '/og.jpg'
+    const imageAlt =
+      'Synerlogic Global Solutions Corporation. Synergy meets Logic, with logic as the blueprint, synergy as operational reality, and the stages Assess, Design, Implement, and Optimise.'
     upsertMeta('property', 'og:image', image)
+    upsertMeta('property', 'og:image:width', '1024')
+    upsertMeta('property', 'og:image:height', '576')
+    upsertMeta('property', 'og:image:alt', imageAlt)
     upsertMeta('name', 'twitter:image', image)
+    upsertMeta('name', 'twitter:image:alt', imageAlt)
 
     if (site && path) {
       const url = `${site}${path}`
