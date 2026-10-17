@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Manrope', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --color-navy: #061d38;
+  --color-blue: #0879cd;
+  --color-cyan: #00b7ea;
+  --color-ice: #eaf3f9;
+  --color-muted: #475569;
+  --color-line: #d5e3ee;
+  --color-ink: #10283f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: #ffffff;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #c9ebf8;
+  color: #061d38;
+}
+
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgb(8 121 205 / 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(8 121 205 / 0.09) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  animation: rise 0.65s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

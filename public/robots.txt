@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# An absolute Sitemap URL is written at build time when VITE_SITE_URL is set.
